@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // FOOD Route
 app.use('/api/food', foodRoute)
+app.use('/images', express.static('uploads'))
 
 app.all('*', (req, res) => {
     return res.status(404).json({

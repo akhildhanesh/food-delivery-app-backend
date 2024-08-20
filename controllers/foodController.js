@@ -33,6 +33,30 @@ const addFood = (req, res) => {
         })
 }
 
+// list food
+
+const listFood = (req, res) => {
+    foodModel.find()
+        .then(data => {
+            res.json({
+                statusCode: 200,
+                success: true,
+                data,
+                timeStamp: new Date().toISOString()
+            })
+        })
+        .catch(err => {
+            console.error(err.message)
+            return res.status(500).json({
+                statusCode: 500,
+                success: false,
+                message: 'ERROR',
+                timeStamp: new Date().toISOString()
+            })
+        })
+}
+
 export {
-    addFood
+    addFood,
+    listFood
 }
