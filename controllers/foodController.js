@@ -1,5 +1,5 @@
 import foodModel from '../models/foodModel.js'
-import { writeFile } from 'node:fs/promises'
+import { unlink } from 'node:fs/promises'
 
 // add food item
 
@@ -56,7 +56,33 @@ const listFood = (req, res) => {
         })
 }
 
+// Remove food item
+
+const removeFood = async (req, res) => {
+    const { id } = req.body
+
+    try {
+        const food = await foodModel.findById(id)
+        await unlink(`uploads/${food.image}`)
+        await foodModel.findByIdAndDelete(id)
+        return res.json({
+            statusCode: 201,
+            success: true,
+            message: 'Food Removed',
+            timeStamp: new Date().toISOString()
+        })
+    } catch (err) {
+        return res.status(500).json({
+            statusCode: 500,
+            success: false,
+            message: 'ERROR',
+            timeStamp: new Date().toISOString()
+        })
+    }
+}
+
 export {
     addFood,
-    listFood
+    listFood,
+    removeFood
 }
