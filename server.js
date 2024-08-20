@@ -17,8 +17,9 @@ app.use('/api/food', foodRoute)
 
 app.all('*', (req, res) => {
     return res.status(404).json({
-        status: 404,
-        message: 'Not Found'
+        statusCode: 404,
+        message: 'Not Found',
+        timeStamp: new Date().toISOString()
     })
 })
 

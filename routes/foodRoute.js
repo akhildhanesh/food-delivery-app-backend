@@ -1,7 +1,7 @@
 import express from 'express'
 import { addFood } from '../controllers/foodController.js'
 import multer from 'multer'
-import { uuid } from 'uuidv4'
+import { v4 as uuid } from 'uuid'
 
 const foodRoute = express.Router()
 
@@ -10,7 +10,7 @@ const foodRoute = express.Router()
 const storage = multer.diskStorage({
     destination: 'uploads',
     filename: (req, file, cb) => {
-        return cb(null, `${uuid()}${file.originalname}`)
+        return cb(null, `${uuid()}_${file.originalname}`)
     }
 })
 
