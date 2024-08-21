@@ -4,17 +4,44 @@ import bcrypt from 'bcrypt'
 import validator from "validator"
 import 'dotenv/config'
 
-
-// Login User
-const loginUser = async (req, res) => {
-
-}
-
 const createToken = id => {
     const payload = {
         id
     }
     return jwt.sign(payload, process.env.JWT_SECRET)
+}
+
+// Login User
+const loginUser = async (req, res) => {
+    const { email, password } = req.body
+    
+    try {
+        const user = await userModel.findOne({ email })
+        if (user) {
+            if (await bcrypt.compare(password, user.password)) {
+                const token = createToken(user._id)
+                return res.json({
+                    statusCode: 200,
+                    success: true,
+                    message: 'User Logged In',
+                    token,
+                    timeStamp: new Date().toISOString()
+                })
+            } else {
+                throw new Error("Wrong Password")
+            }
+        } else {
+            throw new Error("user does not exists -> wrong email")
+        }
+    } catch (error) {
+        console.error(error.message)
+        return res.status(401).json({
+            statusCode: 401,
+            success: false,
+            message: 'Invalid email or Passowrd',
+            timeStamp: new Date().toISOString()
+        })
+    }
 }
 
 // Register User
