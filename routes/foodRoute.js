@@ -1,7 +1,7 @@
 import express from 'express'
 import { addFood, listFood, removeFood } from '../controllers/foodController.js'
 import multer from 'multer'
-import { v4 as uuid } from 'uuid'
+import { randomUUID as uuid } from 'node:crypto'
 
 const foodRoute = express.Router()
 
