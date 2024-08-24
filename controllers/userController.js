@@ -8,7 +8,9 @@ const createToken = id => {
     const payload = {
         id
     }
-    return jwt.sign(payload, process.env.JWT_SECRET)
+    return jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: '1h'
+    })
 }
 
 // Login User
