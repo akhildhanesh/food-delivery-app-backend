@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
         return res.status(401).json({
             statusCode: 401,
             success: false,
-            message: 'Invalid email or Passowrd',
+            message: 'Invalid email or Password',
             timeStamp: new Date().toISOString()
         })
     }
